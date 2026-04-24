@@ -102,6 +102,18 @@ def parse_stepdetail(string):
                     })
                     continue
 
+                ## Custom Heart rate range
+                if (target.upper() == "@X"):
+                    floor, top = value.split("-")
+                    floorMin = int(floor)
+                    topMin = int(top)
+                    stepDetails.update({
+                        'targetType': TargetType.HEART_RATE_ZONE,
+                        'targetValueOne': floorMin,
+                        'targetValueTwo': topMin
+                    })
+                    continue
+
         except Exception as e:
             logger.error(e)
             continue

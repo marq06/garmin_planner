@@ -31,7 +31,7 @@ Your YAML configuration should include the following sections:
    - Define each workout details for workout creation.
    - Step type keys include: `warmup`, `cooldown`, `interval`, `recovery` and `repeat`.
    - Start / End condition keys include: Lap Button `lap`, Time as `sec` or `min` and Distance in `m`
-   - Possible target types include: Heart Rate `@H` and Pace `@P`.
+   - Possible target types include: Heart Rate `@H`, Pace `@P` and custom hear rate range `@X` .
 
 5. **Schedule Plan**:
    - Specify the start date and the sequence of workouts for workout scheduling. 
@@ -59,7 +59,7 @@ workouts:
     - cooldown: 15min @H(z2)
   ga_30min:
     - warmup: lap
-    - run: 30min @H(z2)
+    - run: 30min @X(120-135)
     - cooldown: lap
 
 schedulePlan:
