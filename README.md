@@ -9,6 +9,34 @@ Garmin users would know how much of a pain in the A it is to create and manage w
 
 - **Workout Creations**: Create various types of workouts (e.g., intervals, easy runs) with associated details like warmup and cooldown periods on garmin connect.
 - **Scheduling**: Scheduling workouts created on garmin connect.
+- **Activity Fetcher**: Fetch the latest Garmin Connect activity and display all `INTERVAL_ACTIVE` splits.
+  - Includes activity name, start/end time in CET, and split metrics.
+  - Supports output formats: `table`, `json`, `csv`, and `compact`.
+
+## Activity Fetcher / Activity API
+
+A new CLI command is available to fetch the latest activity from Garmin Connect and print all `INTERVAL_ACTIVE` split details.
+
+Supported output modes:
+
+- `table`: human-readable table
+- `json`: structured JSON object with metadata and splits
+- `csv`: CSV rows for splits, with activity metadata appended at the end in an Excel-friendly form
+- `compact`: compact text message style output with activity name and CET times
+
+Example usage:
+
+```bash
+python -m garmin_planner.fetcher_main --output compact
+```
+
+Example CSV output ends with metadata rows like:
+
+```csv
+,,Activity Name,Bordeaux - intervals_5x1000
+,,Start Time CET,2026-04-30 07:24:55
+,,End Time CET,2026-04-30 08:19:30
+```
 
 ## Input YAML Structure
 

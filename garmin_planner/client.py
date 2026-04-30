@@ -42,6 +42,31 @@ class Client(object):
                                data=workoutJson)
         logger.info(f"""Imported workout {resJson['workoutName']}""")
         return resJson
+
+    def getActivities(self, limit: int = 10) -> list:
+        """Fetch recent activities from Garmin Connect."""
+        try:
+            # Try GET first
+            result = garth.connectapi(f"""/activitylist-service/activities/search/activities""",
+                                      params={"start": 0, "limit": limit})
+            if isinstance(result, list):
+                return result
+            return result.get('activities', []) if isinstance(result, dict) else []
+        except Exception as e:
+            logger.warning(f"Failed to fetch activities with GET, trying alternative: {e}")
+            try:
+                # Fallback: try POST
+                result = garth.connectapi(f"""/activity-service/activities/search/activities""",
+                                         method="POST",
+                                         json={"startIndexInResults": 0, "maxResults": limit})
+                return result if isinstance(result, list) else result.get('activities', [])
+            except Exception as e2:
+                logger.error(f"Both activity fetch methods failed: {e2}")
+                return []
+
+    def getActivitySplits(self, activityId: int) -> dict:
+        """Fetch typed splits for a specific activity."""
+        return garth.connectapi(f"""/activity-service/activity/{activityId}/typedsplits""")
     
     def login(self) -> bool:
         try:
